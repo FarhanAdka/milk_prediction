@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milk Quality Predictor</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Milk Quality Predictor</h1>
+    <form action="/predict" method="post">
+        <label for="ph">pH:</label>
+        <input type="text" id="ph" name="ph"><br><br>
+
+        <label for="temperature">Temperature:</label>
+        <input type="text" id="temperature" name="temperature"><br><br>
+
+        <label for="taste">Taste:</label>
+        <input type="text" id="taste" name="taste"><br><br>
+
+        <label for="odor">Odor:</label>
+        <input type="text" id="odor" name="odor"><br><br>
+
+        <label for="fat">Fat:</label>
+        <input type="text" id="fat" name="fat"><br><br>
+
+        <label for="turbidity">Turbidity:</label>
+        <input type="text" id="turbidity" name="turbidity"><br><br>
+
+        <label for="colour">Colour:</label>
+        <input type="text" id="colour" name="colour"><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+</body>
+</html>
