@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, render_template
 import joblib
 import numpy as np
 
 app = Flask(__name__)
 
 # Load model Decision Tree
-model = joblib.load('model_log_regression.pkl')
+model = joblib.load('model_decision_tree.pkl')
 
 # Label untuk kelas target
 target_names = ['high', 'medium', 'low']  # Sesuaikan dengan label target pada model
@@ -34,10 +34,13 @@ def predict():
         prediction_label = target_names[prediction]
 
         # Tampilkan hasil prediksi
-        return f"<h1>Prediction: {prediction_label}</h1>"
+        #return f"<h1>Prediction: {prediction_label}</h1>"
+        return jsonify({'prediction': prediction_label})
 
     except Exception as e:
-        return f"<h1>Error: {str(e)}</h1>"
+        #return f"<h1>Error: {str(e)}</h1>"
+        return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     # app.run(debug=True)

@@ -1,36 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milk Quality Predictor</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  <meta charset="utf-8">
+  <title>Milk Quality Prediction</title>
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
+
 <body>
-    <h1>Milk Quality Predictor</h1>
-    <form action="/predict" method="post">
-        <label for="ph">pH:</label>
-        <input type="text" id="ph" name="ph"><br><br>
+  <div class="login-root">
+    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+      <div class="loginbackground box-background--white padding-top--64">
+        <div class="loginbackground-gridContainer">
+          <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
+            <div class="box-root" style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
+            </div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
+            <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
+            <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
+            <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
+            <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
+            <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
+            <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
+            <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;"></div>
+          </div>
+          <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
+            <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+        <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+          <h1><a href="http://blog.stackfindover.com/" rel="dofollow">Milk Quality Prediction</a></h1>
+        </div>
+        <div class="formbg-outer">
+            <div class="formbg">
+                <div class="formbg-inner padding-horizontal--48">
+                <span class="padding-bottom--15" style="margin-bottom: 20px;">Input Data</span>
+                <form id="stripe-login">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="flex: 1;">
+                            <div class="field padding-bottom--24">
+                                <label for="ph">pH:</label>
+                                <input type="text" id="ph" name="ph" style="width: 100%; padding: 10px;">
+                            </div>
+                            <div class="field padding-bottom--24">
+                                <label for="taste">Taste:</label>
+                                <input type="text" id="taste" name="taste" style="width: 100%; padding: 10px;">
+                            </div>
+                            <div class="field padding-bottom--24">
+                                <label for="fat">Fat:</label>
+                                <input type="text" id="fat" name="fat" style="width: 100%; padding: 10px;">
+                            </div>
+                            <div class="field padding-bottom--24">
+                                <label for="colour">Colour:</label>
+                                <input type="text" id="colour" name="colour" style="width: 100%; padding: 10px;">
+                            </div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="field padding-bottom--24">
+                                <label for="temperature">Temperature:</label>
+                                <input type="text" id="temperature" name="temperature" style="width: 100%; padding: 10px;">
+                            </div>
+                            <div class="field padding-bottom--24">
+                                <label for="odor">Odor:</label>
+                                <input type="text" id="odor" name="odor" style="width: 100%; padding: 10px;">
+                            </div>
+                            <div class="field padding-bottom--24">
+                                <label for="turbidity">Turbidity:</label>
+                                <input type="text" id="turbidity" name="turbidity" style="width: 100%; padding: 10px;">
+                            </div>
+                        </div>
+                    </div>
 
-        <label for="temperature">Temperature:</label>
-        <input type="text" id="temperature" name="temperature"><br><br>
+                    
+                    
+                    <details>
+                        <summary>
+                            <div class="button" id="button_prediksi" style="margin-top: 15px;">
+                                <p style="color: white;">Prediksi</p>
+                              </div>
+                          <div class="details-modal-overlay"></div>
+                        </summary>
+                        <div class="details-modal">
+                          <div class="details-modal-close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 1.70711C14.0976 1.31658 14.0976 0.683417 13.7071 0.292893C13.3166 -0.0976311 12.6834 -0.0976311 12.2929 0.292893L7 5.58579L1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L5.58579 7L0.292893 12.2929C-0.0976311 12.6834 -0.0976311 13.3166 0.292893 13.7071C0.683417 14.0976 1.31658 14.0976 1.70711 13.7071L7 8.41421L12.2929 13.7071C12.6834 14.0976 13.3166 14.0976 13.7071 13.7071C14.0976 13.3166 14.0976 12.6834 13.7071 12.2929L8.41421 7L13.7071 1.70711Z" fill="black" />
+                            </svg>
+                          </div>
+                          <div class="details-modal-title">
+                            <h1>Hasil Prediksi</h1>
+                          </div>
+                          <div class="details-modal-content">
+                            <p id="prediction_label">
+                              
+                            </p>
+                          </div>
+                        </div>
+                    </details>
+                    
+                </form>
+                </div>
+            </div>
+	        <div class="footer-link padding-top--24">
+                <span>Tugas Besar Data Mining</span>
+                <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
+                    <span><a href="#">Wildan Adji Prabowo</a></span>
+                    <span><a href="#">Farhan Adka Reynaldi</a></span>
+                    <span><a href="#">Andre Fitara</a></span>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <label for="taste">Taste:</label>
-        <input type="text" id="taste" name="taste"><br><br>
+  <script>
+    // Event listener untuk tombol prediksi
+    $('#button_prediksi').on('click', function () {
+      // Ambil data dari form
+      var formData = $('#stripe-login').serialize(); // Ambil data input form
+  
+      // Lakukan AJAX POST ke backend
+      $.ajax({
+        url: '/predict', // Endpoint Flask untuk prediksi
+        method: 'POST', // Gunakan metode POST
+        data: formData, // Data yang dikirimkan
+        success: function (response) {
+          if (response.prediction) {
+            // Tampilkan hasil prediksi ke modal
+            $('#prediction_label').text('Prediksi: ' + response.prediction);
+            $('.details-modal').fadeIn(); // Tampilkan modal hasil prediksi
+          } else {
+            alert("Error: " + response.error); // Jika ada error dari backend
+          }
+        },
+        error: function () {
+          alert("Error in prediction request"); // Jika ada kesalahan di AJAX
+        }
+      });
+    });
+  
+    // Tutup modal saat pengguna mengklik tombol tutup
+    $('.details-modal-close').on('click', function () {
+      $('.details-modal').fadeOut();
+    });
+  </script>
 
-        <label for="odor">Odor:</label>
-        <input type="text" id="odor" name="odor"><br><br>
-
-        <label for="fat">Fat:</label>
-        <input type="text" id="fat" name="fat"><br><br>
-
-        <label for="turbidity">Turbidity:</label>
-        <input type="text" id="turbidity" name="turbidity"><br><br>
-
-        <label for="colour">Colour:</label>
-        <input type="text" id="colour" name="colour"><br><br>
-
-        <button type="submit">Predict</button>
-    </form>
 </body>
+
 </html>
