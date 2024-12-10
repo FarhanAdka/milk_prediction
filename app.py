@@ -4,11 +4,9 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load model Decision Tree
-model = joblib.load('model_decision_tree.pkl')
-
-# Label untuk kelas target
-target_names = ['high', 'medium', 'low']  # Sesuaikan dengan label target pada model
+# Load model Logistic Regression dan Label Encoder
+model = joblib.load('model_log_regression.pkl')
+label_encoder = joblib.load('label_encoder.pkl')
 
 @app.route('/')
 def home():
@@ -20,27 +18,26 @@ def predict():
         # Ambil input dari form untuk semua fitur
         ph = float(request.form['ph'])
         temperature = float(request.form['temperature'])
-        taste = float(request.form['taste'])
-        odor = float(request.form['odor'])
-        fat = float(request.form['fat'])
-        turbidity = float(request.form['turbidity'])
-        colour = float(request.form['colour'])
+        taste = int(request.form['taste'])
+        odor = int(request.form['odor'])
+        fat = int(request.form['fat'])
+        turbidity = int(request.form['turbidity'])
+        colour = int(request.form['colour'])
 
         # Format input ke dalam array sesuai fitur model
         features = np.array([[ph, temperature, taste, odor, fat, turbidity, colour]])
 
         # Prediksi menggunakan model
         prediction = model.predict(features)[0]
-        prediction_label = target_names[prediction]
+
+        # Konversi prediksi angka ke label kelas
+        prediction_label = label_encoder.inverse_transform([prediction])[0]
 
         # Tampilkan hasil prediksi
-        #return f"<h1>Prediction: {prediction_label}</h1>"
         return jsonify({'prediction': prediction_label})
 
     except Exception as e:
-        #return f"<h1>Error: {str(e)}</h1>"
         return jsonify({'error': str(e)})
-
 
 if __name__ == '__main__':
     # app.run(debug=True)
